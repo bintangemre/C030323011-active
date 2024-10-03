@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('booking_transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('customer bank_name');
+            $table->string('customer bank account');
+            $table->string('customer_bank_number');
+            $table->string('booking trx_id');
+            $table->string('proof');
+            $table->unsignedBigInteger('quantity');
+            $table->unsignedBigInteger('total_amount');
+            $table->boolean('is_paid');
+            $table->foreignId('workshop_id')->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

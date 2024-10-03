@@ -13,8 +13,22 @@ return new class extends Migration
     {
         Schema::create('workshops', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->string('thumbnail');
+            $table->string('venue_thumbnail');
+            $table->string('bg_map');
+            $table->text('address');
+            $table->text('about');
+            $table->unsignedBigInteger('price');
+            $table->boolean('is_open');
+            $table->boolean('has_started');
+            $table->date('started_at');
+            $table->time('time_at');
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('workshop_instructor_id')->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
-            
         });
     }
 

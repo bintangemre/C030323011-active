@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('workshop_participants', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('occupation');
+            $table->string('email');
+            $table->foreignId('workshop_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('booking_transaction_id')->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
