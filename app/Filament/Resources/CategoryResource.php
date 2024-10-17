@@ -24,6 +24,17 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 //
+                Forms\Components\TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+
+                Forms\Components\TextInput::make('tagline')
+                ->required()
+                ->maxLength(255),
+
+                Forms\Components\FileUpload::make('icon')
+                ->image()
+                ->required(),
             ]);
     }
 
@@ -32,11 +43,16 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\columns\TextColumn::make('name')
+                ->searchable(),
+
+                Tables\columns\ImageColumn::make('icon')
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
