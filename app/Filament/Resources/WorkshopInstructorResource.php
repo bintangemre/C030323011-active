@@ -24,6 +24,17 @@ class WorkshopInstructorResource extends Resource
         return $form
             ->schema([
                 //
+                Forms\Components\TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+
+                Forms\Components\TextInput::make('occupation')
+                ->required()
+                ->maxLength(255),
+
+                Forms\Components\FileUpload::make('avatar')
+                ->image()
+                ->required(),
             ]);
     }
 
@@ -32,11 +43,18 @@ class WorkshopInstructorResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\columns\TextColumn::make('name')
+                ->searchable(),
+
+                Tables\columns\TextColumn::make('occupation'),
+
+                Tables\columns\ImageColumn::make('avatar')
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
