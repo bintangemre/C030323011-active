@@ -9,9 +9,11 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TimePicker;
 use Filament\Tables\Filters\SelectFilter;
-use App\Filament\Resources\WorkshopResource\Pages;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\WorkshopResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\WorkshopResource\RelationManagers;
 
@@ -58,7 +60,49 @@ class WorkshopResource extends Resource
                                     ->maxLength(255),
                             ]),
                     ]),
-                    
+                Fieldset::make('Additional')
+                    ->schema([
+                        Forms\Components\TextArea::make('About')
+                            ->rows(3)
+                            ->required()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('Price')
+                            ->numeric()
+                            ->prefix('IDR')
+                            ->required(),
+
+                        Forms\Components\Select::make('Is open')
+                            ->options([
+                                1 => 'Yes',
+                                0 => 'No',
+                            ])
+                            ->required()
+                            ->label('Is open'),
+
+                        Forms\Components\Select::make('Has started')
+                            ->options([
+                                1 => 'Yes',
+                                0 => 'No',
+                            ])
+                            ->required()
+                            ->label('Has started'),
+
+                        Forms\Components\Select::make('category_id')
+                            ->relationship('category', 'name')
+                            ->required()
+                            ->label('Category'),
+
+                        Forms\Components\Select::make('instructor_id')
+                            ->relationship('instructor', 'name')
+                            ->required()
+                            ->label('Instructor'),
+
+                        DatePicker::make('Started at'),
+
+                        TimePicker::make('Time at')
+                    ]),
+
             ]);
     }
 
@@ -72,10 +116,10 @@ class WorkshopResource extends Resource
 
                 Tables\columns\TextColumn::make('name')
                     ->searchable(),
-                
+
                 // Tables\columns\TextColumn::make('email')
                 //     ->searchable(),
-                
+
                 Tables\columns\TextColumn::make('category.name'),
 
                 Tables\columns\TextColumn::make('instructor.name'),
@@ -95,7 +139,7 @@ class WorkshopResource extends Resource
             ])
             ->filters([
                 //
-                
+
                 // SelectFilter::make('workshop_id' )
                 //     ->label('workshop' )
                 //     ->relationship('workshop', 'name'),
