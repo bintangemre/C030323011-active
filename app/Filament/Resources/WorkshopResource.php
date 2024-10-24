@@ -62,17 +62,18 @@ class WorkshopResource extends Resource
                     ]),
                 Fieldset::make('Additional')
                     ->schema([
-                        Forms\Components\TextArea::make('About')
+                        Forms\Components\TextArea::make('about')
                             ->rows(3)
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(500)
+                            ->label('About'),
 
-                        Forms\Components\TextInput::make('Price')
+                        Forms\Components\TextInput::make('price')
                             ->numeric()
                             ->prefix('IDR')
                             ->required(),
 
-                        Forms\Components\Select::make('Is open')
+                        Forms\Components\Select::make('is_open')
                             ->options([
                                 1 => 'Yes',
                                 0 => 'No',
@@ -80,7 +81,7 @@ class WorkshopResource extends Resource
                             ->required()
                             ->label('Is open'),
 
-                        Forms\Components\Select::make('Has started')
+                        Forms\Components\Select::make('has_started')
                             ->options([
                                 1 => 'Yes',
                                 0 => 'No',
@@ -93,14 +94,18 @@ class WorkshopResource extends Resource
                             ->required()
                             ->label('Category'),
 
-                        Forms\Components\Select::make('instructor_id')
+                        Forms\Components\Select::make('workshop_instructor_id')
                             ->relationship('instructor', 'name')
                             ->required()
                             ->label('Instructor'),
 
-                        DatePicker::make('Started at'),
-
-                        TimePicker::make('Time at')
+                        Forms\Components\DatePicker::make('started_at')
+                            ->label('Started at')
+                            ->required(),
+                        Forms\Components\TimePicker::make('time_at')
+                            ->label('Time at')
+                            ->required()
+                        
                     ]),
 
             ]);
@@ -148,9 +153,9 @@ class WorkshopResource extends Resource
                     ->label('category')
                     ->relationship('category', 'name'),
 
-                SelectFilter::make('workshop_instructor_id')
-                    ->label('workshop_instructor')
-                    ->relationship('instructor', 'name'),
+                    SelectFilter::make('workshop_instructor_id')
+                    ->label('Instructor')
+                    ->relationship('instructor', 'name')
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
