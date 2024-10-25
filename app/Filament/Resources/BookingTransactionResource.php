@@ -3,14 +3,14 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use Filament\Tables;
 use App\Models\Workshop;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Resources\Resource;
 use App\Models\BookingTransaction;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
-use Filament\Infolists\Components\Grid;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BookingTransactionResource\Pages;
@@ -85,9 +85,9 @@ class BookingTransactionResource extends Resource
                         ->readOnly()
                         ->helperText('Harga sudah include PPN 11%'),
 
-                        Repeater::make( 'Participants' )
+                        Forms\Components\Repeater::make( 'Participants' )
                         ->schema([
-                            Grid::make(2)
+                            Forms\Components\Grid::make(2)
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                 ->label('Participant Name')
@@ -102,7 +102,7 @@ class BookingTransactionResource extends Resource
                                 ->required(),
                             ]),
                         ])
-                        ->column(1)
+                        // ->column(1)
                         ->label('Participant Detail')    
                         ]),
                 ])
