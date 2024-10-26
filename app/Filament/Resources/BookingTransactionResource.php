@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Tables\Table;
+use FIlament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BookingTransactionResource\Pages;
@@ -136,27 +137,27 @@ class BookingTransactionResource extends Resource
                                 ->required()
                                 ->maxLength(255),
                         ]),
-                        Forms\Components\Wizard\Step::make('Payment information')
+                    Forms\Components\Wizard\Step::make('Payment information')
                         ->schema([
                             ToggleButtons::make('is_paid')
-                            ->label('Apakah sudah membayar?')
-                            ->boolean()
-                            ->grouped()
-                            ->icons([
-                                true => 'heroicon-o-pencil',
-                                false => 'heroicon-o-clock',
-                            ])
-                            ->required(),
+                                ->label('Apakah sudah membayar?')
+                                ->boolean()
+                                ->grouped()
+                                ->icons([
+                                    true => 'heroicon-o-pencil',
+                                    false => 'heroicon-o-clock',
+                                ])
+                                ->required(),
 
                             Forms\Components\FileUpload::make('proof')
-                            ->label('Upload Bukti Pembayaran')
-                            ->image()
-                            ->required(),
-                            ]),
+                                ->label('Upload Bukti Pembayaran')
+                                ->image()
+                                ->required(),
+                        ]),
                 ])
-                ->columnSpan('full') //use full width for the wizard
-                ->columns(1)
-                ->skippable()
+                    ->columnSpan('full') //use full width for the wizard
+                    ->columns(1)
+                    ->skippable()
             ]);
     }
 
@@ -165,11 +166,23 @@ class BookingTransactionResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\IconColumn::make('is_paid')
+                ->boolean()
+                ->trueColor('success')
+                ->falseColor('danger')
+                ->trueIcon('heroicon-o-check-circle')
+                ->falseIcon('heroicon-o-x-circle')
+                ->label('Terverifikasi'),
+
             ])
             ->filters([
                 //
+                SelectFilter::make('workshop_id')
+                    ->label('workshop')
+                    ->relationship('workshop', 'name'),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
