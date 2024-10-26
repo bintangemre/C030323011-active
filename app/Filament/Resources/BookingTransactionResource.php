@@ -12,7 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Tables\Table;
-use FIlament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BookingTransactionResource\Pages;
@@ -87,7 +87,7 @@ class BookingTransactionResource extends Resource
                                 ->readOnly()
                                 ->helperText('Harga sudah include PPN 11%'),
 
-                            Repeater::make('Participants')
+                            Repeater::make('participants')
                                 ->schema([
                                     Grid::make(2)
                                         ->schema([
@@ -121,7 +121,7 @@ class BookingTransactionResource extends Resource
                                 ->required()
                                 ->maxLength(255),
 
-                            Forms\Components\TextInput::make('custumer_bank_name')
+                            Forms\Components\TextInput::make('customer_bank_name')
                                 ->required()
                                 ->maxLength(255),
 
@@ -166,6 +166,12 @@ class BookingTransactionResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\ImageColumn::make('workshop.thumbnail')
+                ->label('Workshop Thumbnail')
+                ->square(), // Makes the image square
+                
+                Tables\columns\TextColumn::make('name')->label('Customer Name'),
+                Tables\columns\TextColumn::make('booking_trx_id')->label('Booking Transaction ID'),
                 Tables\Columns\IconColumn::make('is_paid')
                 ->boolean()
                 ->trueColor('success')
