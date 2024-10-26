@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('email');
-            $table->string('customer bank_name');
-            $table->string('customer bank account');
+            $table->string('customer_bank_name');
+            $table->string('customer_bank_account');
             $table->string('customer_bank_number');
-            $table->string('booking trx_id');
+            $table->string('booking_trx_id');
             $table->string('proof');
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('total_amount');
