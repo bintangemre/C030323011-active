@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -24,6 +25,30 @@ class WorkshopParticipantResource extends Resource
         return $form
             ->schema([
                 //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('occupation')
+                    ->required()
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('email')
+                    ->required()
+                    ->maxLength(255),
+
+                Forms\Components\Select::make('workshop_id')
+                    ->relationship('workshop', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+
+                Forms\Components\Select::make('booking_transaction_id')
+                    ->relationship('bookingTransaction', 'booking_trx_id')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+
             ]);
     }
 
@@ -32,11 +57,26 @@ class WorkshopParticipantResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\ImageColumn::make('workshop.thumbnail'),
+
+                Tables\Columns\TextColumn::make('bookingTransaction.booking_trx_id')
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('name')
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('email')
+                ->searchable(),
+
             ])
             ->filters([
                 //
+                SelectFilter::make('workshop_id')
+                ->label('workshop')
+                ->relationship('workshop', 'name'),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
