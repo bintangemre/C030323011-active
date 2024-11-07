@@ -14,7 +14,6 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BookingTransactionResource\Pages;
 use App\Filament\Resources\BookingTransactionResource\RelationManagers;
 
@@ -42,7 +41,7 @@ class BookingTransactionResource extends Resource
                                     $workshop = Workshop::find($state);
                                     $set('price', $workshop ? $workshop->price : 0);
                                 })
-                                ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                ->afterStateHydrated(function ($state, callable $get, callable $set) {
                                     $workshop = Workshop::find($state);
                                     $set('price', $workshop ? $workshop->price : 0);
                                 }),
