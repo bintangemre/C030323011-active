@@ -27,7 +27,7 @@ class BookingTransaction extends Model
             'workshop_id',
     ];
 
-    public function generateUniqueTrxId(){
+    public static function generateUniqueTrxId(){
         $prefix = 'AKT';
         do {
             $randomString = $prefix . mt_rand(1000, 9999);
