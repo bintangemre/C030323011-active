@@ -11,7 +11,7 @@ class StoreCheckBookingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,8 @@ class StoreCheckBookingRequest extends FormRequest
     {
         return [
             //
+            'booking_trx_id' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
         ];
     }
 }

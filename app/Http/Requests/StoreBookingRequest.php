@@ -11,7 +11,7 @@ class StoreBookingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,13 @@ class StoreBookingRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1',
+            'participants.*.name' => 'required|string|max:255',
+            'participants.*.occupation' => 'required|string|max:255',
+            'participants.*.email' => 'required|email|max:255',
         ];
     }
 }
