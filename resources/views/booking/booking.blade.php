@@ -26,7 +26,7 @@
                 <div class="flex flex-col gap-4">
                     <h2 class="font-Neue-Plak-bold text-xl leading-[27.5px]">Workshop Details</h2>
                     <div class="thumbnail-container relative h-[240px] rounded-xl bg-[#D9D9D9] overflow-hidden">
-                        <img src="{{asset('assets/images/thumbnails/thumbnail1.png')}}" class="w-full h-full object-cover" alt="thumbnail">
+                        <img src="{{Storage::url($workshop->thumbnail)}}" class="w-full h-full object-cover" alt="thumbnail">
                     </div>
                     <div class="card-detail flex flex-col gap-2">
                         <div class="flex items-center gap-3">
@@ -101,7 +101,8 @@
                     </p>
                 </label>
             </section>
-            <form id="Form" action="confirm-payment.html" class="flex flex-col w-[724px] gap-8">
+            <form id="Form" method="POST" action="{{route('front.booking_store', $workshop->slug)}}" class="flex flex-col w-[724px] gap-8">
+                @csrf
                 <div class="flex items-center rounded-3xl p-8 gap-4 bg-white">
                     <img src="{{asset('assets/images/icons/shield-tick.svg')}}" class="w-[62px] h-[62px] flex shrink-0" alt="icon">
                     <div class="flex flex-col gap-[2px]">
@@ -226,6 +227,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="workshopPrice" id="workshopPrice" value="{{$workshop->price}}">
                     <button type="submit" class="w-full rounded-xl h-16 px-6 text-center bg-aktiv-orange font-semibold text-lg leading-[27px] text-white">Pay Now</button>
                 </div>
             </form>
