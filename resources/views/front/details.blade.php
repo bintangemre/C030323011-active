@@ -52,7 +52,9 @@
                                 class="flex items-center rounded-md border border-aktiv-green py-2 px-3 gap-[5px] bg-aktiv-green/[9%]">
                                 <img src="{{ asset('assets/images/icons/format-circle.svg') }}"
                                     class="w-6 h-6 flex shrink-0" alt="icon">
-                                <p class="font-medium text-aktiv-green capitalize">self improvement</p>
+                                <p class="font-medium text-aktiv-green capitalize">
+                                    {{$workshop->slug}}
+                                </p>
                             </div>
                             <div class="flex items-center gap-1">
                                 <div class="flex items-center">
